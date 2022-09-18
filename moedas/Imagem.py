@@ -38,4 +38,4 @@ class Imagem:
             if self.valido(a,b-1):
                 if self.imagem[a][b-1] == 255:
                     conjuntos.union(dicio[(a,b)], dicio[(a,b-1)])
-        print(conjuntos.tam_conjuntos())
+        return conjuntos.tam_conjuntos()
