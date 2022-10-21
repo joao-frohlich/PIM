@@ -15,7 +15,7 @@ class Imagem:
         cv2.imwrite(nome.replace('.png', '_Gy.png'), self.gy)
         cv2.imwrite(nome.replace('.png', '_magnitude.png'), self.imagem_magnitude)
         cv2.imwrite(nome.replace('.png', '_direcao.png'), self.imagem_direcao)
-        cv2.imwrite(nome.replace('.png', '_high_boost.png'), self.imagem_high_boost)
+        cv2.imwrite(nome.replace('.png', '_bordas.png'), self.imagem_bordas)
 
 
     def median(self, vet):
@@ -110,16 +110,14 @@ class Imagem:
                     if (mag_ij > mag_x and mag_ij > mag_y):
                         self.max_locais.append((i,j))
 
-
-    def high_boost(self, k):
-        self.imagem_high_boost = self.imagem.copy()
-        for (i, j) in self.max_locais:
-            mask_ij = int(self.imagem_magnitude[i][j])-int(self.imagem[i][j])
-            self.imagem_high_boost[i][j] += k*mask_ij
-            # self.imagem_high_boost[ml[0]][ml[1]] = 
-        # for i in range(0,self.altura):
-        #     for j in range(0,self.largura):
-        #         self.imagem_high_boost[i][j] = min(255, self.imagem_high_boost[i][j]+self.imagem_magnitude[i][j])
+    def bordas(self):
+        self.imagem_bordas = self.imagem.copy()
+        for i in range(0,self.altura):
+            for j in range(0,self.largura):
+                self.imagem_bordas[i][j] = 0
+                
+        for (x,y) in self.max_locais:
+            self.imagem_bordas[x][y] = 255
 
     def sobel(self):
         self.gx = self.imagem.copy()
