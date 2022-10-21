@@ -14,7 +14,7 @@ class Imagem:
         cv2.imwrite(nome.replace('.png', '_Gx.png'), self.gx)
         cv2.imwrite(nome.replace('.png', '_Gy.png'), self.gy)
         cv2.imwrite(nome.replace('.png', '_magnitude.png'), self.imagem_magnitude)
-        cv2.imwrite(nome.replace('.png', '_direcao.png'), self.imagem_direcao)
+        cv2.imwrite(nome.replace('.png', '_bordas.png'), self.imagem_bordas)
         cv2.imwrite(nome.replace('.png', '_high_boost.png'), self.imagem_high_boost)
 
 
@@ -60,11 +60,13 @@ class Imagem:
                 self.imagem_magnitude[i][j] = (self.gy[i][j]**2 + self.gx[i][j]**2)**(1/2.0)
     
     def direcao_gradiente(self):
-        self.imagem_direcao = self.imagem.copy()
+        self.matriz_direcao = []
+        for i in range(0, self.altura):
+            self.matriz_direcao.append([0]*self.largura)
         eps = 10**(-8)
         for i in range(0,self.altura):
             for j in range(0,self.largura):
-                self.imagem_direcao[i][j] = math.degrees(math.atan2(self.gy[i][j],self.gx[i][j]+eps))
+                self.matriz_direcao[i][j] = math.degrees(math.atan2(self.gy[i][j],self.gx[i][j]+eps))
     
     def selecao_gradientes(self):
         self.max_locais = []
@@ -72,7 +74,7 @@ class Imagem:
             for j in range(0,self.largura):
                 x = (0,0)
                 y = (0,0)
-                d_px = self.imagem_direcao[i][j]
+                d_px = self.matriz_direcao[i][j]
 
                 if -180 <= d_px and d_px <= -157.5:
                     y = (i,j-1)
@@ -110,16 +112,20 @@ class Imagem:
                     if (mag_ij > mag_x and mag_ij > mag_y):
                         self.max_locais.append((i,j))
 
+    def bordas(self):
+        self.imagem_bordas = self.imagem.copy()
+        for i in range(0, self.altura):
+            for j in range(0, self.largura):
+                self.imagem_bordas[i][j] = 0
+        for (i,j) in self.max_locais:
+            self.imagem_bordas[i][j] = 255
+                    
 
     def high_boost(self, k):
         self.imagem_high_boost = self.imagem.copy()
         for i in range(0, self.altura):
             for j in range(0, self.largura):
                 self.imagem_high_boost[i][j] = np.uint8(min(255, int(self.imagem_high_boost[i][j])+k*int(self.imagem_magnitude[i][j])))
-            # self.imagem_high_boost[ml[0]][ml[1]] = 
-        # for i in range(0,self.altura):
-        #     for j in range(0,self.largura):
-        #         self.imagem_high_boost[i][j] = min(255, self.imagem_high_boost[i][j]+self.imagem_magnitude[i][j])
 
     def sobel(self):
         self.gx = self.imagem.copy()
