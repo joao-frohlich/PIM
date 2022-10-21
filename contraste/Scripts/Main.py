@@ -37,7 +37,7 @@ print('\nMarilyn')
 marilyn = Imagem('../Imagens/marilyn.jpg')
 marilyn.salvar_histograma('../Histogramas/marilyn.png')
 marilyn.equalizar()
-marilyn.salvar_histograma('../Histogramas/marilyn_equalizada.png')
+marilyn.salvar_histograma_equalizado('../Histogramas/marilyn_equalizada.png')
 marilyn.salvar_imagem_equalizada('../Equalizadas/marilyn.png')
 
 print('\nOutono_LC')

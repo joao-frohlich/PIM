@@ -36,7 +36,7 @@ lua1_gray.high_boost()
 lua1_gray.salvar_imagem('../Testes/Scharr/Lua1_gray.png')
 
 print('Chessboard_inv')
-chessboard_inv.filtro_passa_baixa()
+# chessboard_inv.filtro_passa_baixa()
 
 print('Sobel')
 chessboard_inv.sobel()
@@ -66,7 +66,7 @@ chessboard_inv.high_boost()
 chessboard_inv.salvar_imagem('../Testes/Scharr/chessboard_inv.png')
 
 print("img02")
-img02.filtro_passa_baixa()
+# img02.filtro_passa_baixa()
 
 print('Sobel')
 img02.sobel()
