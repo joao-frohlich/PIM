@@ -15,7 +15,9 @@ class Imagem:
         cv2.imwrite(nome.replace('.png', '_Gy.png'), self.gy)
         cv2.imwrite(nome.replace('.png', '_magnitude.png'), self.imagem_magnitude)
         cv2.imwrite(nome.replace('.png', '_bordas.png'), self.imagem_bordas)
-        cv2.imwrite(nome.replace('.png', '_high_boost.png'), self.imagem_high_boost)
+        cv2.imwrite(nome.replace('.png', '_high_boost05.png'), self.imagem_high_boost_k1)
+        cv2.imwrite(nome.replace('.png', '_high_boost10.png'), self.imagem_high_boost_k2)
+        cv2.imwrite(nome.replace('.png', '_high_boost15.png'), self.imagem_high_boost_k3)
 
 
     def median(self, vet):
@@ -121,11 +123,15 @@ class Imagem:
             self.imagem_bordas[i][j] = 255
                     
 
-    def high_boost(self, k):
-        self.imagem_high_boost = self.imagem.copy()
+    def high_boost(self):
+        self.imagem_high_boost_k1 = self.imagem.copy()
+        self.imagem_high_boost_k2 = self.imagem.copy()
+        self.imagem_high_boost_k3 = self.imagem.copy()
         for i in range(0, self.altura):
             for j in range(0, self.largura):
-                self.imagem_high_boost[i][j] = np.uint8(min(255, int(self.imagem_high_boost[i][j])+k*int(self.imagem_magnitude[i][j])))
+                self.imagem_high_boost_k1[i][j] = np.uint8(min(255, int(self.imagem_high_boost_k3[i][j])+0.5*int(self.imagem_magnitude[i][j])))
+                self.imagem_high_boost_k2[i][j] = np.uint8(min(255, int(self.imagem_high_boost_k2[i][j])+1.0*int(self.imagem_magnitude[i][j])))
+                self.imagem_high_boost_k3[i][j] = np.uint8(min(255, int(self.imagem_high_boost_k3[i][j])+1.5*int(self.imagem_magnitude[i][j])))
 
     def sobel(self):
         self.gx = self.imagem.copy()
