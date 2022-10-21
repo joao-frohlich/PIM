@@ -23,18 +23,22 @@ class Imagem:
     def salvar_imagem_equalizada(self, nome):
         cv2.imwrite(nome, self.imagem_equalizada)
 
-    def gerar_histograma(self):
+    def gerar_histograma(self, img):
         plt.clf()
         plt.cla()
         plt.close()
-        plt.hist(self.imagem.ravel(), 256, [0,256])
+        plt.hist(img.ravel(), 256, [0,256])
 
     def salvar_histograma(self, nome):
-        self.gerar_histograma()
+        self.gerar_histograma(self.imagem)
+        plt.savefig(nome)
+
+    def salvar_histograma_equalizado(self, nome):
+        self.gerar_histograma(self.imagem_equalizada)
         plt.savefig(nome)
 
     def mostrar_histograma(self):
-        self.gerar_histograma()
+        self.gerar_histograma(self.imagem)
         plt.show()
 
     def entropia(self):
@@ -68,7 +72,7 @@ class Imagem:
                 self.imagem_equalizada[i][j] = int(255*aux[self.imagem[i][j]])
 
         # for i in range(0, self.altura):
-        #     for j in range(0, self.largura):
+        #     for j in range(120, self.largura):
         #         janela = self.imagem[max(i-1, 0):min(i+2, self.altura), max(j-1, 0):min(j+2, self.largura)]
         #         freq = [0]*256
         #         altura_janela = len(janela)
@@ -82,6 +86,5 @@ class Imagem:
         #         for i in range(0,256):
         #             soma_prefixa += freq[i]*1.0/num_pixels_janela
         #             p[i] = soma_prefixa
-        #         print(p)
         #         self.imagem_equalizada[i][j] = int(255*p[self.imagem[i][j]])
                 
