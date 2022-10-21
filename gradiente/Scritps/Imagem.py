@@ -23,7 +23,7 @@ class Imagem:
         n = len(vet)
         # print(n)
         if n % 2 == 0:
-            return (vet[n//2]+vet[(n//2)-1])//2
+            return (int(vet[n//2])+int(vet[int(n//2)-1]))//2
         return vet[n//2]
 
     def valido(self, px, py):
@@ -114,7 +114,7 @@ class Imagem:
     def high_boost(self, k):
         self.imagem_high_boost = self.imagem.copy()
         for (i, j) in self.max_locais:
-            mask_ij = self.imagem_magnitude[i][j]-self.imagem[i][j]
+            mask_ij = int(self.imagem_magnitude[i][j])-int(self.imagem[i][j])
             self.imagem_high_boost[i][j] += k*mask_ij
             # self.imagem_high_boost[ml[0]][ml[1]] = 
         # for i in range(0,self.altura):
