@@ -1,4 +1,5 @@
 from Imagem import Imagem
+from ImagemRGB import ImagemRGB
 
 figura_clara = Imagem('../Imagens/figuraClara.jpg')
 figura_clara.entropia()
@@ -29,3 +30,7 @@ figura_escura.salvar_histograma('../Histogramas/figuraEscura.png')
 marilyn = Imagem('../Imagens/marilyn.jpg')
 marilyn.equalizar()
 marilyn.salvar_imagem_equalizada('../Equalizadas/marilyn.png')
+
+outono_LC = ImagemRGB('../Imagens/outono_LC.png')
+outono_LC.equalizar()
+outono_LC.salvar_imagem('../Equalizadas/outono_LC.png')
